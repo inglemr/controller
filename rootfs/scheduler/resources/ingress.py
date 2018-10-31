@@ -22,7 +22,7 @@ class Ingress(Resource):
 
         return response
 
-    def create(self, ingress, namespace, hostname):
+    def create(self, ingress, namespace, hostname, ingress_class):
         url = "/apis/extensions/v1beta1/namespaces/%s/ingresses" % namespace
 
         data = {
@@ -30,13 +30,16 @@ class Ingress(Resource):
             "apiVersion": "extensions/v1beta1",
             "metadata": {
                 "name": ingress
+                "annotations":{
+                    "kubernetes.io/ingress.class": ingress_class
+                }
             },
             "spec": {
                 "rules": [
                     {"host": ingress + "." + hostname,
                      "http": {
                          "paths": [
-                             {"path": "/",
+                             {"path": "/*",
                               "backend": {
                                   "serviceName": ingress,
                                   "servicePort": 80

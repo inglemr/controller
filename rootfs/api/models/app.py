@@ -200,7 +200,7 @@ class App(UuidAuditedModel):
                 self._scheduler.ns.get(namespace)
             except KubeException:
                 try:
-                    self._scheduler.ns.create(namespace)
+                    self._scheduler.ns.create(namespace,settings.ENABLE_ISTIO_INJECTION)
                 except KubeException as e:
                     raise ServiceUnavailable('Could not create the Namespace in Kubernetes') from e
 
@@ -238,7 +238,8 @@ class App(UuidAuditedModel):
                     self.log("creating Ingress {}".format(namespace), level=logging.INFO)
                     self._scheduler.ingress.create(ingress,
                                                    namespace,
-                                                   settings.EXPERIMENTAL_NATIVE_INGRESS_HOSTNAME)
+                                                   settings.EXPERIMENTAL_NATIVE_INGRESS_HOSTNAME,
+                                                   settings.EXPERIMENTAL_NATIVE_INGRESS_CLASS)
         except KubeException as e:
             raise ServiceUnavailable('Could not create Ingress in Kubernetes') from e
         try:

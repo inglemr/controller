@@ -26,7 +26,7 @@ class Namespace(Resource):
 
         return response
 
-    def create(self, namespace):
+    def create(self, namespace, istio_injection):
         url = self.api("/namespaces")
         data = {
             "kind": "Namespace",
@@ -34,7 +34,8 @@ class Namespace(Resource):
             "metadata": {
                 "name": namespace,
                 "labels": {
-                    'heritage': 'deis'
+                    'heritage': 'deis',
+                    'istio-injection': istio_injection
                 }
             }
         }
