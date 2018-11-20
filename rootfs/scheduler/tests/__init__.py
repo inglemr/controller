@@ -18,7 +18,7 @@ class TestCase(DjangoTestCase):
 
     def create_namespace(self):
         namespace = generate_random_name()
-        response = self.scheduler.ns.create(namespace)
+        response = self.scheduler.ns.create(namespace, settings.ENABLE_ISTIO_INJECTION)
         self.assertEqual(response.status_code, 201, response.json())
         # assert minimal amount data
         data = response.json()
@@ -28,7 +28,8 @@ class TestCase(DjangoTestCase):
             {
                 'name': namespace,
                 'labels': {
-                    'heritage': 'deis'
+                    'heritage': 'deis',
+                    'istio-injection': 'disabled'
                 }
             },
             data['metadata']

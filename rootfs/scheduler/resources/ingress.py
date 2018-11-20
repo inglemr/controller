@@ -29,8 +29,8 @@ class Ingress(Resource):
             "kind": "Ingress",
             "apiVersion": "extensions/v1beta1",
             "metadata": {
-                "name": ingress
-                "annotations":{
+                "name": ingress,
+                "annotations": {
                     "kubernetes.io/ingress.class": ingress_class
                 }
             },
@@ -39,7 +39,7 @@ class Ingress(Resource):
                     {"host": ingress + "." + hostname,
                      "http": {
                          "paths": [
-                             {"path": "/*",
+                             {"path": "/",
                               "backend": {
                                   "serviceName": ingress,
                                   "servicePort": 80

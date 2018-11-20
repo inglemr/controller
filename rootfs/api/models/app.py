@@ -200,7 +200,7 @@ class App(UuidAuditedModel):
                 self._scheduler.ns.get(namespace)
             except KubeException:
                 try:
-                    self._scheduler.ns.create(namespace,settings.ENABLE_ISTIO_INJECTION)
+                    self._scheduler.ns.create(namespace, settings.ENABLE_ISTIO_INJECTION)
                 except KubeException as e:
                     raise ServiceUnavailable('Could not create the Namespace in Kubernetes') from e
 

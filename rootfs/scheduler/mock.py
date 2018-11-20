@@ -921,7 +921,7 @@ class MockSchedulerClient(KubeHTTPClient):
         try:
             self.ns.get('deis')
         except KubeHTTPException:
-            self.ns.create('deis')
+            self.ns.create('deis', 'enabled')
 
         try:
             self.secret.get('deis', 'objectstorage-keyfile')
@@ -945,7 +945,7 @@ class MockSchedulerClient(KubeHTTPClient):
         try:
             self.ns.get('duplicate')
         except KubeHTTPException:
-            self.ns.create('duplicate')
+            self.ns.create('duplicate', 'enabled')
 
         try:
             self.node.get('172.17.8.100')

@@ -40,7 +40,8 @@ class NamespacesTest(TestCase):
             {
                 'name': self.namespace,
                 'labels': {
-                    'heritage': 'deis'
+                    'heritage': 'deis',
+                    'istio-injection': 'disabled'
                 }
             },
             data['metadata']
