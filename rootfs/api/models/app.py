@@ -893,6 +893,10 @@ class App(UuidAuditedModel):
             self._scheduler.svc.update(self.id, self.id, data=old_service)
             raise ServiceUnavailable(str(e)) from e
 
+        # set maintenance mode for services
+        for svc in self.service_set.all():
+            svc.maintenance_mode(mode)
+
     def routable(self, routable):
         """
         Turn on/off if an application is publically routable
@@ -1108,6 +1112,7 @@ class App(UuidAuditedModel):
             'deployment_revision_history_limit': deployment_history,
             'release_summary': release.summary,
             'pod_termination_grace_period_seconds': pod_termination_grace_period_seconds,
+            'pod_termination_grace_period_each': config.termination_grace_period,
             'image_pull_secret_name': image_pull_secret_name,
             'image_pull_policy': image_pull_policy
         }
